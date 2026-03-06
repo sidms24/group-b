@@ -1,0 +1,115 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{dirtree}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{minted}
+
+\newtcblisting{codecell}[1][]{
+  listing engine=minted,
+  minted language=python,
+  minted style=default,
+  minted options={fontsize=\small, breaklines},
+  colback=white,
+  colframe=gray!30,
+  left=5mm,
+  enhanced,
+  listing only,
+  overlay={\node[anchor=north east, font=\scriptsize\ttfamily\color{gray}] 
+    at (frame.north east) {#1};}
+}
+
+
+\title{README -Group B\\Advanced Machine Learning, EFDS 2025--26}
+\author{Dhruv Syam, Jiaqi Chen, Said Musse}
+\date{March 6, 2026}
+
+\begin{document}
+\maketitle
+
+\section{Folder Structure}
+\dirtree{%
+  .1 /.
+  .2 Notebooks/.
+  .3 prediction.ipynb \DTcomment{Q2.3.2 MC and TD Prediction}.
+  .3 control.ipynb \DTcomment{Q2.3.3 MC and TD Control}.
+  .3 tournament\_agent\_final.ipynb \DTcomment{Q2.4 Tournament Agent (NFSP)}.
+  .3 win\_rate\_analysis.ipynb \DTcomment{Supplementary diagnostics}.
+  .2 sections/.
+  .3 \_\_init\_\_.py.
+  .3 environment.py.
+  .3 policies.py.
+  .3 features.py.
+  .3 episodes.py.
+  .3 mc.py.
+  .3 td.py.
+  .3 sarsa.py.
+  .3 schedules.py.
+  .3 trainer.py.
+  .3 evaluation.py.
+  .3 visualisations.py.
+  .2 rlagent/.
+  .3 agentB.py \DTcomment{Tournament agent}.
+  .3 weights.npz 
+  .2 requirements.txt.
+}
+
+\section{Dependencies}
+
+\noindent All packages are listed in \texttt{requirements.txt} and installed automatically by the first cell of each notebook. The table below summarises each dependency and its role in the project.
+
+\medskip
+\begin{center}
+\begin{tabular}{lll}
+\hline
+\textbf{Package} & \textbf{Version} & \textbf{Purpose} \\
+\hline
+\texttt{numpy}      & $\geq$1.24.0 & Array operations, NumPy-only tournament agent inference \\
+\texttt{jax}        & $\geq$0.4.20 & Automatic differentiation, JIT compilation, \texttt{vmap} vectorisation \\
+\texttt{jaxlib}     & $\geq$0.4.20 & Backend for JAX (CPU/GPU/TPU) \\
+\texttt{matplotlib} & $\geq$3.7.0  & All plots: training curves, heatmaps, bar charts \\
+\texttt{pandas}     & $\geq$2.0.0  & Rolling-window statistics in MSE decomposition analysis \\
+\texttt{tqdm}       & $\geq$4.65.0 & Progress bars during training and hyperparameter sweeps \\
+\texttt{pyyaml}     & $\geq$6.0    & YAML configuration parsing (JAX internal dependency) \\
+\texttt{flax}       & $\geq$0.8.0  & Neural network layers for the NFSP tournament agent (Q2.4) \\
+\texttt{optax}      & $\geq$0.1.7  & Optimisers (Adam, cosine schedule) for NFSP training (Q2.4) \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Running Notebooks}
+
+\noindent All notebooks are designed for \textbf{Google Colab}. Each notebook contains a \texttt{REPRODUCE} flag at the top:
+
+\begin{codecell}[{[1]}]
+REPRODUCE = False  # Set True to rerun training from scratch
+
+!git clone https://github.com/sidms24/internship.git /content/project
+%cd /content/project
+!pip install -q jax jaxlib numpy matplotlib pandas tqdm flax optax
+\end{codecell}
+
+\noindent With \texttt{REPRODUCE = False} (default), notebooks load pretrained weights and produce plots only. Set \texttt{REPRODUCE = True} to rerun all experiments from scratch ($\leq$40 compute units).
+
+
+\subsection{Q2.3.2: Prediction (\texttt{prediction.ipynb})}
+
+Runs a hyperparameter sweep over \{MC, TD(0)\} $\times$ \{54-dim, 65-dim, tile-coded, combined\} feature representations. For each combination, sequentially optimises learning rate and epsilon schedules. Outputs: reward curves, win rate evaluations vs Default Player 2, strategy heatmaps, and summary tables.
+
+\noindent Runtime: $\sim$3--5 Minutes on Colab V6e TPU. 
+
+\subsection{Q2.3.3: Control (\texttt{control.ipynb})}
+
+\noindent Runs a hyperparameter sweep over \{MC, TD(0)\} $\times$ \{54-dim, 65-dim, tile-coded, combined\} feature representations. For each combination, sequentially optimises learning rate and epsilon schedules. Outputs: reward curves, win rate evaluations vs Default Player 2, strategy heatmaps, and summary tables.
+
+\noindent Runtime: $\sim$20--30 Minutes on Colab V6e TPU. 
+
+
+\subsection{Q2.4: Tournament Agent (\texttt{tournament\_agent\_final.ipynb})}
+
+
+
+
+
+\end{document}
