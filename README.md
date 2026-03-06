@@ -13,7 +13,7 @@ Dhruv Syam, Jiaqi Chen, Said Musse — March 6, 2026
 │   ├── prediction.ipynb                # Q2.3.2 MC and TD Prediction
 │   ├── control.ipynb                   # Q2.3.3 MC and TD Control
 │   ├── tournament_agent_final.ipynb    # Q2.4 Tournament Agent (NFSP)
-│   └── ppo_sac.ipynb         # Experimenting With PPO
+│   └── ppo_sac.ipynb                   # Experimenting With PPO
 ├── sections/
 │   ├── __init__.py
 │   ├── environment.py
